@@ -3,227 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Day 7 - Full Interaction</title>
+    <title>Day 8 - Full Interaction</title>
     <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            background: #000;
-            font-family: -apple-system, sans-serif;
-            overflow: hidden;
-            color: white;
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background: #000; font-family: -apple-system, sans-serif;
+            overflow: hidden; color: white;
         }
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url('https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=1000&auto=format&fit=crop') center/cover;
-            filter: brightness(0.2) blur(20px);
-            z-index: 1;
-        }
+
         .status-bar {
-            position: relative;
-            z-index: 10;
-            text-align: right;
-            padding: 45px 20px 5px 0;
-            color: #ff3b30;
-            font-size: 14px;
-            font-weight: bold;
+            position: relative; z-index: 10; text-align: right;
+            padding: 45px 20px 5px 0; color: #ff3b30; font-size: 14px; font-weight: bold;
+            animation: blink 1s infinite;
         }
+
         .marquee {
-            position: relative;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 0;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative; z-index: 10; background: rgba(255,255,255,0.05);
+            padding: 10px 0; overflow: hidden; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         .marquee-inner {
-            display: inline-block;
-            white-space: nowrap;
-            animation: scroll 15s linear infinite;
-            font-size: 13px;
-        }
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-        .container {
-            position: relative;
-            z-index: 2;
-            width: 90%;
-            margin: 15px auto;
-            display: flex;
-            flex-direction: column;
-        }
-        .bubble {
-            padding: 12px 16px;
-            border-radius: 20px;
-            font-size: 18px;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            max-width: 80%;
-            position: relative;
-        }
-        .gray {
-            background: #1c1c1e;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-        .right-wrapper {
-            align-self: flex-end;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-        .typing {
-            background: #1c1c1e;
-            width: 45px;
-            height: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 15px;
-            opacity: 0;
-        }
-        /* ТОЧКИ СПРАВА */
-        .typing-right {
-            animation: showTyping 2s forwards;
-            animation-delay: 1s;
-        }
-        /* ТОЧКИ СЛЕВА (перед гифкой) */
-        .typing-left {
-            align-self: flex-start;
-            animation: showTyping 2s forwards;
-            animation-delay: 4s;
-            /* Появляются после синего облачка */
-            margin-bottom: 10px;
-        }
-        @keyframes showTyping {
-            0% {
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-                height: 25px;
-            }
-            100% {
-                opacity: 0;
-                height: 0;
-                margin: 0;
-                overflow: hidden;
-            }
-        }
-        .blue {
-            background: #007aff;
-            border-bottom-right-radius: 4px;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: fadeIn 0.5s forwards;
+            display: inline-block; white-space: nowrap;
+            animation: scroll 15s linear infinite; font-size: 13px;
             animation-delay: 3s;
+            transform: translateX(100%);
+        }
+        
+        @keyframes scroll { 
+            0% { transform: translateX(100%); } 
+            100% { transform: translateX(-100%); } 
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
+
+        .container { position: relative; z-index: 2; width: 90%; margin: 15px auto; display: flex; flex-direction: column; }
+
+        .bubble {
+            padding: 12px 16px; border-radius: 20px; font-size: 18px;
+            line-height: 1.4; margin-bottom: 8px; max-width: 80%;
+            position: relative;
+        }
+
+        .gray { background: #1c1c1e; align-self: flex-start; border-bottom-left-radius: 4px; }
+
+        /* ИНДИКАТОР ЗАГРУЗКИ */
+        .progress-wrapper { margin-top: 12px; width: 100%; }
+        
+        .progress-container {
+            width: 100%; background: #333; height: 6px; 
+            border-radius: 3px; overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%; 
+            height: 100%; background: #007aff;
+            /* Появляется вместе со счетчиком через 2 сек */
+            animation: load 1.5s ease-out forwards;
+            animation-delay: 2s;
+        }
+
+        .progress-labels {
+            display: flex; justify-content: space-between;
+            font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px;
+            font-weight: bold;
+        }
+
+        @keyframes load { from { width: 0; } to { width: 0.139%; } } /* 1.39 от 1000 это 0.139% */
+
+        .right-wrapper {
+            align-self: flex-end; width: 100%; display: flex;
+            flex-direction: column; align-items: flex-end;
+        }
+
+        .typing {
+            background: #1c1c1e; width: 45px; height: 25px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 15px; opacity: 0;
+        }
+
+        .typing-right { animation: showTyping 2s forwards; animation-delay: 1s; }
+        .typing-left { 
+            align-self: flex-start; 
+            animation: showTyping 2s forwards; 
+            animation-delay: 4.5s; 
+            margin-bottom: 10px; 
+        }
+
+        @keyframes showTyping {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; height: 25px; }
+            100% { opacity: 0; height: 0; margin: 0; overflow: hidden; }
+        }
+
+        .blue {
+            background: #007aff; border-bottom-right-radius: 4px;
+            opacity: 0; transform: translateY(10px);
+            animation: fadeIn 0.5s forwards; 
+            animation-delay: 3.5s;
             margin-bottom: 10px;
         }
+
         .gif-left {
-            background: #1c1c1e;
-            align-self: flex-start;
-            padding: 3px;
-            border-radius: 25px;
-            border-bottom-left-radius: 3px;
-            width: 210px;
-            opacity: 0;
-            transform: translateY(10px);
+            background: #1c1c1e; align-self: flex-start;
+            padding: 3px; border-radius: 18px; border-bottom-left-radius: 4px;
+            width: 220px; opacity: 0; transform: translateY(10px);
             animation: fadeIn 0.5s forwards;
-            animation-delay: 6s;
-            /* Появляется сразу после того, как исчезнут точки слева */
+            animation-delay: 6.5s; 
         }
+        .gif-left img { width: 100%; border-radius: 15px; display: block; }
 
-        .gif-left img {
-            width: 100%;
-            border-radius: 12px;
-            display: block;
-        }
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .dot {
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background: #888;
-            border-radius: 50%;
-            margin: 0 1px;
-            animation: bounce 1.3s infinite;
-        }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes bounce {
-            0%,
-            60%,
-            100% {
-                transform: translateY(0);
-            }
-            30% {
-                transform: translateY(-4px);
-            }
-        }
+        .dot { display: inline-block; width: 4px; height: 4px; background: #888; border-radius: 50%; margin: 0 1px; animation: bounce 1.3s infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
     </style>
-
 </head>
-
 <body>
-    <div class="background"></div>
     <div class="status-bar">1% 🔋</div>
     <div class="marquee">
-        <div class="marquee-inner">Day 7 of posting this until I’m accidentally rich or YouTube breaks • Thanks for
-            watching, champ! • Join the journey •</div>
+        <div class="marquee-inner">Day 8 of posting this until I’m accidentally rich or YouTube breaks • Member #28 is going to be a legend • Thanks for watching, champ! • Join the journey •</div>
     </div>
+
     <div class="container">
-        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 13:45
-            PM</div>
+        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 11:45 PM</div>
+        
         <div class="bubble gray">
-            Day 7 of posting this until I’m accidentally rich or YouTube breaks.
-            <div style="font-weight: 800; font-size: 26px; margin-top: 5px;">$1.39</div>
-            <div style="opacity: 0.4; font-size: 11px;">1 LIKE = 1 CENT </div>
+            Day 8 of posting this until I’m accidentally rich or YouTube breaks.
+            
+            <div id="counter" style="font-weight: 800; font-size: 28px; margin-top: 5px;">$0.00</div>
+            
+            <div class="progress-wrapper">
+                <div class="progress-container">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>$0</span>
+                    <span>GOAL: $1000</span>
+                </div>
+            </div>
+            
+            <div style="opacity: 0.4; font-size: 11px; margin-top: 8px;">1 LIKE = 1 CENT </div>
         </div>
+
         <div class="right-wrapper">
             <div class="typing typing-right">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="bubble blue">
-                Wanna see if it works? <br>Follow for Day 8. 🔓
+                Wanna see if it works? <br>Follow for Day 9. 🔓
             </div>
         </div>
+
         <div class="typing typing-left">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
+
         <div class="gif-left">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExazBiN2dxZDZyd21ybXJ6cHl5bGZ1OTY3MGw4cmJwc3F5YTQ0anZqMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/QhjR3MG9ZFfjB6BtIZ/giphy.gif" alt="vibe cat">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExazBiN2dxZDZyd21ybXJ6cHl5bGZ1OTY3MGw4cmJwc3F5YTQ0anZqMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/tXL4FHPSnVJ0A/giphy.gif" alt="cat">
         </div>
+
     </div>
+
+    <script>
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = "$" + (progress * (end - start) + start).toFixed(2);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        const obj = document.getElementById("counter");
+        // Запуск анимации ровно через 2 секунды
+        setTimeout(() => {
+            animateValue(obj, 0, 1.68, 1000);
+        }, 2000);
+    </script>
 </body>
 </html>
