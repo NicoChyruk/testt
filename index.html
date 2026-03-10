@@ -69,7 +69,7 @@
             font-weight: bold;
         }
 
-        @keyframes load { from { width: 0; } to { width: 0.139%; } } /* 1.39 от 1000 это 0.139% */
+        @keyframes load { from { width: 0; } to { width: 0.04%; } } /* 1.39 от 1000 это 0.139% */
 
         .right-wrapper {
             align-self: flex-end; width: 100%; display: flex;
@@ -125,14 +125,14 @@
 <body>
     <div class="status-bar">1% 🔋</div>
     <div class="marquee">
-        <div class="marquee-inner">Day 8 of posting this until I’m accidentally rich or YouTube breaks • Member #28 is going to be a legend • Thanks for watching, champ! • Join the journey •</div>
+        <div class="marquee-inner">Day 8 of posting this until I’m accidentally rich or TikTok breaks • Member #9 is going to be a legend • Thanks for watching, champ! • Join the journey •</div>
     </div>
 
     <div class="container">
         <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 11:45 PM</div>
         
         <div class="bubble gray">
-            Day 8 of posting this until I’m accidentally rich or YouTube breaks.
+            Day 8 of posting this until I’m accidentally rich or TikTok breaks.
             
             <div id="counter" style="font-weight: 800; font-size: 28px; margin-top: 5px;">$0.00</div>
             
@@ -185,7 +185,7 @@
         const obj = document.getElementById("counter");
         // Запуск анимации ровно через 2 секунды
         setTimeout(() => {
-            animateValue(obj, 0, 1.68, 1000);
+            animateValue(obj, 0, 0.04, 1000);
         }, 2000);
     </script>
 </body>
