@@ -58,7 +58,6 @@
         .progress-fill {
             width: 0%; 
             height: 100%; background: #007aff;
-            /* Появляется вместе со счетчиком через 2 сек */
             animation: load 1.5s ease-out forwards;
             animation-delay: 2s;
         }
@@ -69,7 +68,8 @@
             font-weight: bold;
         }
 
-        @keyframes load { from { width: 0; } to { width: 0.04%; } } /* 1.39 от 1000 это 0.139% */
+        /* Уменьшил ширину до 0.2%, чтобы соответствовать сумме $1.87 из миллиона */
+        @keyframes load { from { width: 0; } to { width: 0.2%; } } 
 
         .right-wrapper {
             align-self: flex-end; width: 100%; display: flex;
@@ -142,7 +142,7 @@
                 </div>
                 <div class="progress-labels">
                     <span>$0</span>
-                    <span>GOAL: $1000000</span>
+                    <span>GOAL: $1,000,000</span>
                 </div>
             </div>
             
@@ -183,9 +183,8 @@
         }
 
         const obj = document.getElementById("counter");
-        // Запуск анимации ровно через 2 секунды
         setTimeout(() => {
-            animateValue(obj, 0, 1.87, 1000000);
+            animateValue(obj, 0, 1.87, 1500);
         }, 2000);
     </script>
 </body>
