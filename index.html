@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Day 28 - Full Interaction</title>
+    <title>Day 29 - Updated Stats</title>
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
@@ -47,7 +47,7 @@
 
         .gray { background: #1c1c1e; align-self: flex-start; border-bottom-left-radius: 4px; }
 
-        /* ИНДИКАТОР ЗАГРУЗКИ */
+        /* ИНДИКАТОРЫ ЗАГРУЗКИ */
         .progress-wrapper { margin-top: 12px; width: 100%; }
         
         .progress-container {
@@ -62,14 +62,19 @@
             animation-delay: 2s;
         }
 
+        /* Цвета для новых полос */
+        .fill-green { background: #34c759; animation-delay: 2.5s; }
+        .fill-orange { background: #ff9500; animation-delay: 3s; }
+
         .progress-labels {
             display: flex; justify-content: space-between;
             font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px;
             font-weight: bold;
         }
 
-        /* Уменьшил ширину до 0.2%, чтобы соответствовать сумме $1.87 из миллиона */
         @keyframes load { from { width: 0; } to { width: 0.2%; } } 
+        /* Для YouTube и Tips оставим 0% в анимации, пока там по нулям */
+        @keyframes loadZero { from { width: 0; } to { width: 0%; } }
 
         .right-wrapper {
             align-self: flex-end; width: 100%; display: flex;
@@ -125,16 +130,15 @@
 <body>
     <div class="status-bar">1% 🔋</div>
     <div class="marquee">
-        <div class="marquee-inner">Day 28 of posting this until I’m accidentally rich or YouTube breaks. • Member #63 is going to be a legend • Thanks for watching, champ! • Join the journey •</div>
+        <div class="marquee-inner">Day 29 of posting this until I’m accidentally rich or YouTube breaks. • Member #67 is going to be a legend • Thanks for watching, champ! • Join the journey •</div>
     </div>
 
     <div class="container">
-        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 7:45 PM</div>
+        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 1:45 PM</div>
         
         <div class="bubble gray">
-            Day 28 of posting this until I’m accidentally rich or YouTube breaks 
-            
-            <div id="counter" style="font-weight: 800; font-size: 28px; margin-top: 5px;">$0.00</div>
+            <div style="font-size: 13px; opacity: 0.6; margin-bottom: 4px;">LIKES EARNINGS (1¢ = 1 LIKE)</div>
+            <div id="counter" style="font-weight: 800; font-size: 28px;">$0.00</div>
             
             <div class="progress-wrapper">
                 <div class="progress-container">
@@ -145,8 +149,22 @@
                     <span>GOAL: $1,000,000</span>
                 </div>
             </div>
-            
-            <div style="opacity: 0.4; font-size: 11px; margin-top: 8px;">1 LIKE = 1 CENT </div>
+
+            <div class="progress-wrapper" style="margin-top: 15px;">
+                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">YOUTUBE ADS REVENUE</div>
+                <div id="yt-ads" style="font-weight: 700; font-size: 18px; color: #34c759;">$0.00</div>
+                <div class="progress-container">
+                    <div class="progress-fill fill-green" style="animation-name: loadZero;"></div>
+                </div>
+            </div>
+
+            <div class="progress-wrapper" style="margin-top: 15px;">
+                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">COMMUNITY TIPS</div>
+                <div id="tips" style="font-weight: 700; font-size: 18px; color: #ff9500;">$0.00</div>
+                <div class="progress-container">
+                    <div class="progress-fill fill-orange" style="animation-name: loadZero;"></div>
+                </div>
+            </div>
         </div>
 
         <div class="right-wrapper">
@@ -154,7 +172,7 @@
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="bubble blue">
-                Be the reason I wake up happy tomorrow. <br>Follow for Day 29. 🔓
+                Be the reason I wake up happy tomorrow. <br>Follow for Day 30. 🔓
             </div>
         </div>
 
@@ -163,7 +181,7 @@
         </div>
 
         <div class="gif-left">
-            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bTFuMDYxZGpoZHoybWZvNHNzcmh3MnBjc2t1Nm9scW55ZjQ1MmN2MSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/9EuG8bg3yzhzq/giphy.gif" alt="cat">
+            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3bTFuMDYxZGpoZHoybWZvNHNzcmh3MnBjc2t1Nm9scW55ZjQ1MmN2MSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/lZfieM3rRK5ZTMOnNd/giphy.gif" alt="cat">
         </div>
 
     </div>
@@ -182,9 +200,14 @@
             window.requestAnimationFrame(step);
         }
 
-        const obj = document.getElementById("counter");
+        const objLikes = document.getElementById("counter");
+        const objAds = document.getElementById("yt-ads");
+        const objTips = document.getElementById("tips");
+
         setTimeout(() => {
-            animateValue(obj, 0, 5.19, 1500);
+            animateValue(objLikes, 0, 5.33, 1500); // Лайки (твои данные)
+            animateValue(objAds, 0, 0.00, 1000);   // YouTube Ads
+            animateValue(objTips, 0, 0.00, 1000);  // Tips
         }, 2000);
     </script>
 </body>
