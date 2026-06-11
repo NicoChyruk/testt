@@ -1,229 +1,230 @@
+подскажи, а где тут цвет текста менять?
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Day 100 - Rich By Mistake</title>
-    <style>
-        body, html {
-            margin: 0; padding: 0; height: 100%; width: 100%;
-            background: #000; font-family: -apple-system, sans-serif;
-            overflow: hidden; color: white;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Day 101 - Rich By Mistake</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background: #000; font-family: -apple-system, sans-serif;
+            overflow: hidden; color: white;
+        }
 
-        .status-bar {
-            position: relative; z-index: 10; text-align: right;
-            padding: 45px 20px 5px 0; color: #ff3b30; font-size: 14px; font-weight: bold;
-            animation: blink 1s infinite;
-        }
+        .status-bar {
+            position: relative; z-index: 10; text-align: right;
+            padding: 45px 20px 5px 0; color: #ff3b30; font-size: 14px; font-weight: bold;
+            animation: blink 1s infinite;
+        }
 
-        /* БЕГУЩАЯ СТРОКА БЕЗ ТЕНЕЙ */
-        .marquee {
-            position: relative; z-index: 10; background: rgba(255,255,255,0.05);
-            padding: 10px 0; overflow: hidden; 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .marquee-inner {
-            display: inline-block; white-space: nowrap;
-            animation: scroll 15s linear infinite; 
-            font-size: 13px;
-            transform: translateX(70%); 
-        }
-        
-        @keyframes scroll { 
-            0% { transform: translateX(70%); } 
-            100% { transform: translateX(-100%); } 
-        }
+        /* БЕГУЩАЯ СТРОКА БЕЗ ТЕНЕЙ */
+        .marquee {
+            position: relative; z-index: 10; background: rgba(255,255,255,0.05);
+            padding: 10px 0; overflow: hidden; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .marquee-inner {
+            display: inline-block; white-space: nowrap;
+            animation: scroll 15s linear infinite; 
+            font-size: 13px;
+            transform: translateX(70%); 
+        }
+        
+        @keyframes scroll { 
+            0% { transform: translateX(70%); } 
+            100% { transform: translateX(-100%); } 
+        }
 
-        @keyframes blink {
-            50% { opacity: 0.3; }
-        }
+        @keyframes blink {
+            50% { opacity: 0.3; }
+        }
 
-        .container { position: relative; z-index: 2; width: 90%; margin: 15px auto; display: flex; flex-direction: column; }
+        .container { position: relative; z-index: 2; width: 90%; margin: 15px auto; display: flex; flex-direction: column; }
 
-        .bubble {
-            padding: 12px 16px; border-radius: 20px; font-size: 18px;
-            line-height: 1.4; margin-bottom: 8px; max-width: 80%;
-            position: relative;
-        }
+        .bubble {
+            padding: 12px 16px; border-radius: 20px; font-size: 18px;
+            line-height: 1.4; margin-bottom: 8px; max-width: 80%;
+            position: relative;
+        }
 
-        .gray { 
-            background: #1c1c1e; 
-            align-self: flex-start; 
-            border-bottom-left-radius: 4px; 
-            width: 80%; 
-            box-sizing: border-box;
-        }
+        .gray { 
+            background: #1c1c1e; 
+            align-self: flex-start; 
+            border-bottom-left-radius: 4px; 
+            width: 80%; 
+            box-sizing: border-box;
+        }
 
-        .blue {
-            background: linear-gradient(135deg, #ffd700 0%, #b8860b 100%);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-bottom-right-radius: 4px;
-            opacity: 0; transform: translateY(10px);
-            animation: fadeIn 0.5s forwards; 
-            animation-delay: 3.5s;
-            margin-bottom: 10px;
-            font-weight: 500;
-            color: #000000;
-        }
+        .blue {
+            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
+            
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom-right-radius: 4px;
+            opacity: 0; transform: translateY(10px);
+            animation: fadeIn 0.5s forwards; 
+            animation-delay: 3.5s;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
 
-        .progress-wrapper { margin-top: 12px; width: 100%; }
-        
-        .progress-container {
-            width: 100%; background: #333; height: 6px; 
-            border-radius: 3px; overflow: hidden;
-        }
-        
-        .progress-fill {
-            width: 0%; 
-            height: 100%; background: #007aff;
-            animation: load 1.5s ease-out forwards;
-            animation-delay: 2s;
-        }
+        .progress-wrapper { margin-top: 12px; width: 100%; }
+        
+        .progress-container {
+            width: 100%; background: #333; height: 6px; 
+            border-radius: 3px; overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%; 
+            height: 100%; background: #007aff;
+            animation: load 1.5s ease-out forwards;
+            animation-delay: 2s;
+        }
 
-        .fill-green { background: #34c759; animation-delay: 2.5s; }
-        .fill-orange { background: #ff9500; animation-delay: 3s; }
+        .fill-green { background: #34c759; animation-delay: 2.5s; }
+        .fill-orange { background: #ff9500; animation-delay: 3s; }
 
-        .progress-labels {
-            display: flex; justify-content: space-between;
-            font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px;
-            font-weight: bold;
-        }
+        .progress-labels {
+            display: flex; justify-content: space-between;
+            font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px;
+            font-weight: bold;
+        }
 
-        @keyframes load { from { width: 0; } to { width: 0.2%; } } 
-        @keyframes loadZero { from { width: 0; } to { width: 0%; } }
+        @keyframes load { from { width: 0; } to { width: 0.2%; } } 
+        @keyframes loadZero { from { width: 0; } to { width: 0%; } }
 
-        .right-wrapper {
-            align-self: flex-end; width: 100%; display: flex;
-            flex-direction: column; align-items: flex-end;
-        }
+        .right-wrapper {
+            align-self: flex-end; width: 100%; display: flex;
+            flex-direction: column; align-items: flex-end;
+        }
 
-        .typing {
-            background: #1c1c1e; width: 45px; height: 25px;
-            display: flex; justify-content: center; align-items: center;
-            border-radius: 15px; opacity: 0;
-        }
+        .typing {
+            background: #1c1c1e; width: 45px; height: 25px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 15px; opacity: 0;
+        }
 
-        .typing-right { animation: showTyping 2s forwards; animation-delay: 1s; }
-        .typing-left { 
-            align-self: flex-start; 
-            animation: showTyping 2s forwards; 
-            animation-delay: 4.5s; 
-            margin-bottom: 10px; 
-        }
+        .typing-right { animation: showTyping 2s forwards; animation-delay: 1s; }
+        .typing-left { 
+            align-self: flex-start; 
+            animation: showTyping 2s forwards; 
+            animation-delay: 4.5s; 
+            margin-bottom: 10px; 
+        }
 
-        @keyframes showTyping {
-            0% { opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; height: 25px; }
-            100% { opacity: 0; height: 0; margin: 0; overflow: hidden; }
-        }
+        @keyframes showTyping {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; height: 25px; }
+            100% { opacity: 0; height: 0; margin: 0; overflow: hidden; }
+        }
 
-        .gif-left {
-            background: #1c1c1e; align-self: flex-start;
-            padding: 3px; border-radius: 18px; border-bottom-left-radius: 4px;
-            width: 220px; opacity: 0; transform: translateY(10px);
-            animation: fadeIn 0.5s forwards;
-            animation-delay: 6.5s; 
-        }
-        .gif-left img { width: 100%; border-radius: 15px; display: block; }
+        .gif-left {
+            background: #1c1c1e; align-self: flex-start;
+            padding: 3px; border-radius: 18px; border-bottom-left-radius: 4px;
+            width: 220px; opacity: 0; transform: translateY(10px);
+            animation: fadeIn 0.5s forwards;
+            animation-delay: 6.5s; 
+        }
+        .gif-left img { width: 100%; border-radius: 15px; display: block; }
 
-        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
-        .dot { display: inline-block; width: 4px; height: 4px; background: #888; border-radius: 50%; margin: 0 1px; animation: bounce 1.3s infinite; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
-    </style>
+        .dot { display: inline-block; width: 4px; height: 4px; background: #888; border-radius: 50%; margin: 0 1px; animation: bounce 1.3s infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px); } }
+    </style>
 </head>
 <body>
-    <div class="status-bar">1% 🔋</div>
-    <div class="marquee">
-        <div class="marquee-inner">DAY 100! 100 days of pure dedication. We are not stopping until we are accidentally rich or YouTube breaks! Shoutout to all the OGs who been here since Day 1!</div>
-    </div>
+    <div class="status-bar">1% 🔋</div>
+    <div class="marquee">
+        <div class="marquee-inner"> Day 101 of posting this until I’m accidentally rich or YouTube breaks • Member #130 is a legend • Thanks for watching, champ! • Join the journey •</div>
+    </div>
 
-    <div class="container">
-        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 2:36 PM</div>
-        
-        <div class="bubble gray">
-            <div style="font-size: 13px; opacity: 0.6; margin-bottom: 4px;">LIKES EARNINGS (1¢ = 1 LIKE)</div>
-            <div id="counter" style="font-weight: 800; font-size: 28px;">$0.00</div>
-            
-            <div class="progress-wrapper">
-                <div class="progress-container">
-                    <div class="progress-fill"></div>
-                </div>
-                <div class="progress-labels">
-                    <span>$0</span>
-                    <span>GOAL: $1,000,000</span>
-                </div>
-            </div>
+    <div class="container">
+        <div style="text-align: center; color: rgba(255,255,255,0.3); font-size: 11px; margin-bottom: 10px;">Today 2:36 PM</div>
+        
+        <div class="bubble gray">
+            <div style="font-size: 13px; opacity: 0.6; margin-bottom: 4px;">LIKES EARNINGS (1¢ = 1 LIKE)</div>
+            <div id="counter" style="font-weight: 800; font-size: 28px;">$0.00</div>
+            
+            <div class="progress-wrapper">
+                <div class="progress-container">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>$0</span>
+                    <span>GOAL: $1,000,000</span>
+                </div>
+            </div>
 
-            <div class="progress-wrapper" style="margin-top: 15px;">
-                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">YOUTUBE ADS REVENUE</div>
-                <div id="yt-ads" style="font-weight: 700; font-size: 18px; color: #34c759;">$0.00</div>
-                <div class="progress-container">
-                    <div class="progress-fill fill-green" style="animation-name: loadZero;"></div>
-                </div>
-            </div>
+            <div class="progress-wrapper" style="margin-top: 15px;">
+                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">YOUTUBE ADS REVENUE</div>
+                <div id="yt-ads" style="font-weight: 700; font-size: 18px; color: #34c759;">$0.00</div>
+                <div class="progress-container">
+                    <div class="progress-fill fill-green" style="animation-name: loadZero;"></div>
+                </div>
+            </div>
 
-            <div class="progress-wrapper" style="margin-top: 15px;">
-                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">COMMUNITY FUND (INVESTED IN VOO)</div>
-                <div id="tips" style="font-weight: 700; font-size: 18px; color: #ff9500;">$0.00</div>
-                <div class="progress-container">
-                    <div class="progress-fill fill-orange" style="animation-name: loadZero;"></div>
-                </div>
-                <div class="progress-labels">
-                    <span style="font-size: 8px; opacity: 0.8;">ALL TIPS GO TO VOO INDEX</span>
-                    <span>GOAL: $1,000,000</span>
-                </div>
-            </div>
-        </div>
+            <div class="progress-wrapper" style="margin-top: 15px;">
+                <div style="font-size: 11px; opacity: 0.5; margin-bottom: 4px;">COMMUNITY FUND (INVESTED IN VOO)</div>
+                <div id="tips" style="font-weight: 700; font-size: 18px; color: #ff9500;">$0.00</div>
+                <div class="progress-container">
+                    <div class="progress-fill fill-orange" style="animation-name: loadZero;"></div>
+                </div>
+                <div class="progress-labels">
+                    <span style="font-size: 8px; opacity: 0.8;">ALL TIPS GO TO VOO INDEX</span>
+                    <span>GOAL: $1,000,000</span>
+                </div>
+            </div>
+        </div>
 
-        <div class="right-wrapper">
-            <div class="typing typing-right">
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            </div>
-            <div class="bubble blue">
-                Be the reason I wake up happy tomorrow. <br>Follow for Day 101. 🔓
-            </div>
-        </div>
+        <div class="right-wrapper">
+            <div class="typing typing-right">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+            <div class="bubble blue">
+                Be the reason I wake up happy tomorrow. <br>Follow for Day 101. 🔓
+            </div>
+        </div>
 
-        <div class="typing typing-left">
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+        <div class="typing typing-left">
+            <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
 
-        <div class="gif-left">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXgxeXh4MGxnMW15a3c0MHlraG5uMW9jYmN0c3UzZm85M21mOWhnYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/YWY1azy2JouCmGVMzo/giphy.gif" alt="cat">
-        </div>
+        <div class="gif-left">
+            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3dDI4OWx4aXFoaWRhMTRpN2RyYjVpczZrNXpzMTlieHkzejhmcXl0OCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Z5xk7fGO5FjjTElnpT/giphy.gif" alt="cat">
+        </div>
 
-    </div>
+    </div>
 
-    <script>
-        function animateValue(obj, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = "$" + (progress * (end - start) + start).toFixed(2);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
+    <script>
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = "$" + (progress * (end - start) + start).toFixed(2);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
 
-        const objLikes = document.getElementById("counter");
-        const objAds = document.getElementById("yt-ads");
-        const objTips = document.getElementById("tips");
+        const objLikes = document.getElementById("counter");
+        const objAds = document.getElementById("yt-ads");
+        const objTips = document.getElementById("tips");
 
-        setTimeout(() => {
-            animateValue(objLikes, 0, 15.04, 1500); 
-            animateValue(objAds, 0, 0.00, 1000);   
-            animateValue(objTips, 0, 0.00, 1000);  
-        }, 2000);
-    </script>
+        setTimeout(() => {
+            animateValue(objLikes, 0, 15.09, 1500); 
+            animateValue(objAds, 0, 0.00, 1000);   
+            animateValue(objTips, 0, 0.00, 1000);  
+        }, 2000);
+    </script>
 </body>
 </html>
