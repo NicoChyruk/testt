@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Day 129 - Rich By Mistake</title>
+    <title>Day 130 - Rich By Mistake</title>
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
@@ -12,18 +12,22 @@
         }
 
         .status-bar {
-            position: relative; z-index: 10; text-align: right;
-            padding: 45px 20px 5px 0; color: #ff3b30; font-size: 14px; font-weight: bold;
+            position: relative; z-index: 10;
+            display: flex; justify-content: space-between;
+            padding: 45px 20px 5px 20px;
+            color: #ff3b30; font-size: 14px; font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .status-blink {
             animation: blink 1s infinite;
         }
 
-        /* ЭФФЕКТ ЗАТУХАНИЯ ПО КРАЯМ */
+        /* БЕГУЩАЯ СТРОКА С ЧЕТКИМИ КРАЯМИ (БЕЗ ТЕНЕЙ) */
         .marquee {
             position: relative; z-index: 10; background: rgba(255,255,255,0.05);
             padding: 10px 0; overflow: hidden; 
             border-bottom: 1px solid rgba(255,255,255,0.1);
-            -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-            mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
         }
         
         .marquee-inner {
@@ -140,9 +144,13 @@
     </style>
 </head>
 <body>
-    <div class="status-bar">1% 🔋</div>
+    <div class="status-bar">
+        <span>Jul 10 2026</span>
+        <span class="status-blink">1% 🔋</span>
+    </div>
+    
     <div class="marquee">
-        <div class="marquee-inner">Day 129 of posting this until I’m accidentally rich or TikTok breaks • Member #152 is a legend • Thanks for watching, champ! • Join the journey •</div>
+        <div class="marquee-inner">Day 130 of posting this until I’m accidentally rich or TikTok breaks • Member #152 is a legend • Thanks for watching, champ! • Join the journey •</div>
     </div>
 
     <div class="container">
@@ -188,7 +196,7 @@
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="bubble blue">
-                Be the reason I wake up happy tomorrow. <br>Follow for Day 130. 🔓
+                Be the reason I wake up happy tomorrow. <br>Follow for Day 131. 🔓
             </div>
         </div>
 
@@ -221,7 +229,7 @@
         const objTips = document.getElementById("tips");
 
         setTimeout(() => {
-            animateValue(objLikes, 0, 18.37, 1500); 
+            animateValue(objLikes, 0, 18.39, 1500); 
             animateValue(objAds, 0, 0.00, 1000);   
             animateValue(objTips, 0, 0.00, 1000);  
         }, 2000);
