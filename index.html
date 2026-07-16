@@ -3,19 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Day 135 - Rich By Mistake</title>
+    <title>Day 136 - Rich By Mistake</title>
     <style>
         body, html {
             margin: 0; padding: 0; height: 100%; width: 100%;
             background: #000; font-family: -apple-system, sans-serif;
             overflow: hidden; color: white;
+            transition: filter 0.1s;
+        }
+
+        /* ЭФФЕКТ ТРЯСКИ И ИСКАЖЕНИЯ ЦВЕТА */
+        .glitch-active {
+            animation: screen-shake 0.1s infinite !important;
+            filter: invert(1) hue-rotate(180deg) saturate(3); /* Полное искажение цветов */
+        }
+
+        @keyframes screen-shake {
+            0% { transform: translate(0, 0) skew(0deg); }
+            10% { transform: translate(-6px, 4px) skew(-4deg); }
+            20% { transform: translate(6px, -4px) skew(4deg); }
+            30% { transform: translate(-3px, -6px) skew(-1deg); }
+            40% { transform: translate(4px, 6px) skew(3deg); }
+            55% { transform: translate(-6px, 3px) skew(-3deg); }
+            70% { transform: translate(3px, -3px) skew(0deg); }
+            85% { transform: translate(-4px, 2px) skew(2deg); }
+            100% { transform: translate(0, 0) skew(0deg); }
+        }
+
+        /* КРАШ-ОКНО ДЛЯ ЮТУБА */
+        #youtube-crash {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', monospace;
+            box-sizing: border-box;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .crash-box {
+            border: 2px solid #ff3b30;
+            background: #111;
+            padding: 30px 20px;
+            border-radius: 12px;
+            max-width: 85%;
+            box-shadow: 0 0 20px rgba(255, 59, 48, 0.5);
         }
 
         .status-bar {
             position: relative; z-index: 10;
             display: flex; justify-content: space-between;
             padding: 45px 20px 5px 20px;
-            color: #ff3b30; font-size: 14px; font-weight: bold;
+            font-size: 14px; font-weight: bold;
             box-sizing: border-box;
         }
 
@@ -24,10 +68,11 @@
         }
         
         .status-blink {
+            color: #ff3b30;
             animation: blink 1s infinite;
         }
 
-        /* БЕГУЩАЯ СТРОКА С ЧЕТКИМИ КРАЯМИ (БЕЗ ТЕНЕЙ) */
+        /* БЕГУЩАЯ СТРОКА С ЧЕТКИМИ КРАЯМИ */
         .marquee {
             position: relative; z-index: 10; background: rgba(255,255,255,0.05);
             padding: 10px 0; overflow: hidden; 
@@ -67,9 +112,11 @@
         }
 
         .blue {
-            background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
-            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Меняем синий на глубокий индиго-фиолетовый градиент */
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            /* Делаем свечение более мягким и эстетичным */
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-bottom-right-radius: 4px;
             opacity: 0; transform: translateY(10px);
             animation: fadeIn 0.5s forwards; 
@@ -148,13 +195,27 @@
     </style>
 </head>
 <body>
+
+    <!-- ЭКРАН ОШИБКИ YOUTUBE -->
+    <div id="youtube-crash">
+        <div class="crash-box">
+            <div style="font-size: 32px; margin-bottom: 15px;">⚠️</div>
+            <div style="color: #ff3b30; font-size: 18px; font-weight: bold; margin-bottom: 10px;">FATAL_ERROR</div>
+            <div style="color: #fff; font-size: 13px; line-height: 1.5; margin-bottom: 20px;">
+                STATUS: YOUTUBE_SERVER_OVERLOADED (502)<br>
+                Reason: Too many "Rich By Mistake" views.
+            </div>
+            <div style="color: #888; font-size: 11px;">Reconnecting in 1s...</div>
+        </div>
+    </div>
+
     <div class="status-bar">
-        <span class="status-date">Jul 15 2026</span>
+        <span class="status-date">Jul 16 2026</span>
         <span class="status-blink">1% 🔋</span>
     </div>
     
     <div class="marquee">
-        <div class="marquee-inner">Day 135 of posting this until I’m accidentally rich or TikTok breaks • Member #155 is a legend • Thanks for watching, champ! • Join the journey •</div>
+        <div class="marquee-inner">Day 136 of posting this until I’m accidentally rich or TikTok breaks • Member #158 is a legend • Thanks for watching, champ! • Join the journey •</div>
     </div>
 
     <div class="container">
@@ -200,7 +261,7 @@
                 <div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="bubble blue">
-                Be the reason I wake up happy tomorrow. <br>Follow for Day 136. 🔓
+                Be the reason I wake up happy tomorrow. <br>Follow for Day 137. 🔓
             </div>
         </div>
 
@@ -209,7 +270,7 @@
         </div>
 
         <div class="gif-left">
-            <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NTJxdWF4ZXN5NmN3bDl0MXhoanhhNTY5aWM3dHZsaXRwcGFpb2hxciZlcD12MV9naWZzX3NlYXJjaCZjdD1n/pHWFj7mt7qyBs2XYC6/giphy.gif" alt="cat">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNG9wcTIwNDNsZDNhOHQ3dm1iN3piYWR0YXFwNWticHdqdWhvZXFydCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/mHfIgrxD2Meyjw5Sgi/giphy.gif" alt="cat">
         </div>
 
     </div>
@@ -232,11 +293,28 @@
         const objAds = document.getElementById("yt-ads");
         const objTips = document.getElementById("tips");
 
+        // Плавное накопление цифр
         setTimeout(() => {
-            animateValue(objLikes, 0, 19.18, 1500); 
+            animateValue(objLikes, 0, 19.24, 1500); 
             animateValue(objAds, 0, 0.00, 1000);   
             animateValue(objTips, 0, 0.00, 1000);  
         }, 2000);
+
+        // СКРИПТ ГЛИТЧА / СЛОМАННОГО ЮТУБА (НА 5.2 СЕКУНДЕ)
+        const body = document.body;
+        const crashScreen = document.getElementById("youtube-crash");
+
+        setTimeout(() => {
+            body.classList.add("glitch-active");
+            crashScreen.style.display = "flex";
+            
+            // Отключаем глитч через 1.2 секунды
+            setTimeout(() => {
+                body.classList.remove("glitch-active");
+                crashScreen.style.display = "none";
+            }, 1300);
+
+        }, 4200); // 5.2 секунды
     </script>
 </body>
 </html>
