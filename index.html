@@ -91,6 +91,7 @@
         /* 3. ОБНОВЛЕННАЯ СМЕНА ТЕМЫ НА ГЛУБОКУЮ НЕОНОВУЮ */
         .gray { 
             background: linear-gradient(145deg, #0f0c20 0%, #15102a 100%);
+            padding: 16px;
             border: 1px solid rgba(168, 85, 247, 0.2);
             box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
             align-self: flex-start; 
@@ -119,17 +120,23 @@
             font-weight: 500;
         }
 
-        .progress-wrapper { margin-top: 12px; width: 100%; }
+        .progress-wrapper { margin-top: 18px; width: 100%; }
         
         .progress-container {
-            width: 100%; background: #1a1530; height: 6px; 
-            border-radius: 3px; overflow: hidden;
-        }
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08); /* Делаем подложку видимой */
+            height: 8px; /* Сделаем чуть толще (был 6px) */
+            border-radius: 4px;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            overflow: hidden; /* Закругляет заполнение внутри */
+        }   
         
         .progress-fill {
             width: 0%; 
             height: 100%; background: #007aff;
-            animation: load 1.5s ease-out forwards;
+            border-radius: 4px; /* Закругление углов шкалы */
+            animation: load 6.2s linear forwards;
             animation-delay: 2s;
         }
 
@@ -137,12 +144,22 @@
         .fill-orange { background: #ff9500; animation-delay: 3s; }
 
         .progress-labels {
-            display: flex; justify-content: space-between;
-            font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px;
-            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            font-weight: 600;
         }
 
-        @keyframes load { from { width: 0; } to { width: 0.2%; } } 
+        /* Синхронизированная анимация заполнения шкалы с JS-счётчиком:
+           0s - 1.2s (19.35% от времени) -> быстрый рост до 17.26% ($17.26)
+           1.2s - 6.2s (100% времени) -> плавное доведение до 19.18% ($19.18)
+        */
+        @keyframes load { 
+            0% { width: 0%; } 
+            19.35% { width: 17.262%; }
+            100% { width: 19.18%; } 
+        } 
         @keyframes loadZero { from { width: 0; } to { width: 0%; } }
 
         .right-wrapper {
@@ -174,7 +191,7 @@
 
         .gif-left {
             background: #15102a; align-self: flex-start;
-            padding: 3px; border-radius: 18px; border-bottom-left-radius: 4px;
+            padding: 4px; border-radius: 16px; border-bottom-left-radius: 4px; overflow: hidden;
             width: 220px; opacity: 0; transform: translateY(10px);
             animation: fadeIn 0.5s forwards;
             animation-delay: 6.5s; 
@@ -218,7 +235,7 @@
                 </div>
                 <div class="progress-labels">
                     <span>$0</span>
-                    <span>GOAL: $1,000,000</span>
+                    <span>GOAL: $100</span>
                 </div>
             </div>
 
@@ -227,6 +244,10 @@
                 <div id="yt-ads" style="font-weight: 700; font-size: 18px; color: #34c759;">$0.00</div>
                 <div class="progress-container">
                     <div class="progress-fill fill-green" style="animation-name: loadZero;"></div>
+                </div>
+                <div class="progress-labels">
+                    <span>$0</span>
+                    <span>GOAL: $100</span>
                 </div>
             </div>
 
@@ -238,7 +259,7 @@
                 </div>
                 <div class="progress-labels">
                     <span style="font-size: 8px; opacity: 0.8;">ALL TIPS GO TO VOO INDEX</span>
-                    <span>GOAL: $1,000,000</span>
+                    <span>GOAL: $100</span>
                 </div>
             </div>
         </div>
@@ -263,13 +284,35 @@
     </div>
 
     <script>
-        function animateValue(obj, start, end, duration) {
+        function animateValue(obj, start, end, fastDuration = 1500, slowDuration = 5000) {
             let startTimestamp = null;
+            const threshold = 0.90; // 90% суммы набирается быстро, 10% — медленно
+            const midValue = start + (end - start) * threshold;
+
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = "$" + (progress * (end - start) + start).toFixed(2);
-                if (progress < 1) {
+                const elapsed = timestamp - startTimestamp;
+
+                let currentValue;
+
+                if (elapsed <= fastDuration) {
+                    // Фаза 1: Первые 90% суммы за 1.2 секунды (плавное нарастание)
+                    const progress = elapsed / fastDuration;
+                    const eased = Math.sin((progress * Math.PI) / 2); // Ease-out
+                    currentValue = start + (midValue - start) * eased;
+                } else if (elapsed <= fastDuration + slowDuration) {
+                    // Фаза 2: Оставшиеся 10% суммы за 5 секунд (очень медленный добор)
+                    const slowElapsed = elapsed - fastDuration;
+                    const progress = slowElapsed / slowDuration;
+                    const eased = Math.pow(progress, 0.7); // Мягкая доводка
+                    currentValue = midValue + (end - midValue) * eased;
+                } else {
+                    currentValue = end;
+                }
+
+                obj.innerHTML = "$" + currentValue.toFixed(2);
+
+                if (elapsed < fastDuration + slowDuration) {
                     window.requestAnimationFrame(step);
                 }
             };
@@ -280,11 +323,14 @@
         const objAds = document.getElementById("yt-ads");
         const objTips = document.getElementById("tips");
 
-        // Плавное накопление цифр
+        // Стартуем через 2 секунды
         setTimeout(() => {
-            animateValue(objLikes, 0, 19.18, 1500); 
-            animateValue(objAds, 0, 0.00, 1000);   
-            animateValue(objTips, 0, 0.00, 1000);  
+            // fastDuration: 1200ms (быстрый взлет до 90%), slowDuration: 5000ms (5 сек на последние 10%)
+            animateValue(objLikes, 0, 19.18, 1200, 5000); 
+            
+            // Если сумма $0.00, она просто мгновенно зафиксируется
+            animateValue(objAds, 0, 0.00, 1000, 0);   
+            animateValue(objTips, 0, 0.00, 1000, 0);  
         }, 2000);
 
         // СКРИПТ ДЛЯ МАТРИЧНОГО ДОЖДЯ
